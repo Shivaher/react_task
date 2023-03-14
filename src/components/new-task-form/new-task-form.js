@@ -50,26 +50,27 @@ export default class NewTaskForm extends React.Component {
   }
 
   render() {
+    const { min, sec, lable } = this.state
+
+    // if (min !== Number || sec !== Number) {
+    //   return
+    // }
+
     return (
       <form className="new-todo-form" onKeyDown={(e) => this.onSubmit(e)}>
+        <input className="new-todo" placeholder="What i need to do?" value={lable} onChange={this.onLableChange} />
         <input
-          className="new-todo"
-          placeholder="What i need to do?"
-          value={this.state.lable}
-          onChange={this.onLableChange}
-        />
-        <input
-          type="text"
+          type="number"
           className="new-todo-form__timer"
           placeholder="Min"
-          value={this.state.min}
+          value={min}
           onChange={this.onMinChange}
         />
         <input
-          type="text"
+          type="number"
           className="new-todo-form__timer"
           placeholder="Sec"
-          value={this.state.sec}
+          value={sec}
           onChange={this.onSecChange}
         />
       </form>
