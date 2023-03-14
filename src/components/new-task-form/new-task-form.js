@@ -14,6 +14,8 @@ export default class NewTaskForm extends React.Component {
 
   state = {
     lable: '',
+    min: '',
+    sec: '',
   }
 
   onLableChange = (e) => {
@@ -22,28 +24,53 @@ export default class NewTaskForm extends React.Component {
     })
   }
 
+  onMinChange = (e) => {
+    this.setState({
+      min: e.target.value,
+    })
+  }
+  onSecChange = (e) => {
+    this.setState({
+      sec: e.target.value,
+    })
+  }
+
   onSubmit = (e) => {
-    e.preventDefault()
-    if (this.state.lable.length === 0 || !this.state.lable.trim()) {
-      this.setState({
-        lable: '',
-      })
-    } else {
-      this.props.onItemAdded(this.state.lable)
-      this.setState({
-        lable: '',
-      })
+    if (e.keyCode === 13) {
+      if (this.state.title !== '' && this.state.min !== '' && this.state.sec !== '') {
+        this.props.addItem(this.state.lable, parseInt(this.state.min) * 60 + parseInt(this.state.sec))
+
+        this.setState({
+          lable: '',
+          min: '',
+          sec: '',
+        })
+      }
     }
   }
 
   render() {
     return (
-      <form className="new-todo-form" onSubmit={this.onSubmit}>
+      <form className="new-todo-form" onKeyDown={(e) => this.onSubmit(e)}>
         <input
           className="new-todo"
           placeholder="What i need to do?"
           value={this.state.lable}
           onChange={this.onLableChange}
+        />
+        <input
+          type="text"
+          className="new-todo-form__timer"
+          placeholder="Min"
+          value={this.state.min}
+          onChange={this.onMinChange}
+        />
+        <input
+          type="text"
+          className="new-todo-form__timer"
+          placeholder="Sec"
+          value={this.state.sec}
+          onChange={this.onSecChange}
         />
       </form>
     )
